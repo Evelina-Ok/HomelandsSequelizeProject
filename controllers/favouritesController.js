@@ -82,33 +82,7 @@ favouritesController.get("/favourites", async (req, res) => {
     }
   });
   
-  //put - update
-  favouritesController.put("/favourites", async (req, res) => {
-    const { id, user_id, estate_id } = req.body;
-  
-    if (id && user_id && estate_id) {
-      try {
-        const result = await favouritesModel.update({ user_id, estate_id }, { where: { id } });
-  
-        if (result[0] > 0) {
-          res.status(200).json({
-            message: `favourite med id ${id}, user id ${user_id} and estate id ${estate_id} was updated`,
-          });
-        } else {
-          res.status(404).json({ message: `By med ${id} ikke fundet` });
-        }
-      } catch (error) {
-        res.status(500).json({
-          message: `Fejl ved opdatering af favouritesModel: ${error.message}`,
-        });
-      }
-    } else {
-      res.status(400).send({
-        message: "Fejl i opdatering af favouritesModel: Mangler data",
-      });
-    }
-  });
-  
+    
   // Route til at slette en favourite baseret på ID
   favouritesController.delete("/favourites/:id([0-9]+)", async (req, res) => {
     // Henter ID fra URL-parametrene

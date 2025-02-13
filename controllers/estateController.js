@@ -9,30 +9,16 @@ import { energyLabelModel } from "../models/energyLabelModel.js";
 export const estateController = express.Router();
 
 // Definerer relationen mellem estate modellen og by modellen
-estateModel.belongsTo(cityModel, {
-  foreignKey: {
-    allowNull: false
-  }
-});
+estateModel.belongsTo(cityModel);
 cityModel.hasMany(estateModel);
 
 // Defines relation between estate model and estate type model
-estateModel.belongsTo(estateTypeModel, {
-  foreignKey: {
-    allowNull: false
-  }
-});
+estateModel.belongsTo(estateTypeModel);
 estateTypeModel.hasMany(estateModel);
 
 // Defines relation between estate model and energy label model
-estateModel.belongsTo(energyLabelModel, {
-    foreignKey: {
-      allowNull: false
-    }
-  });
-  energyLabelModel.hasMany(estateModel);
-
-
+estateModel.belongsTo(energyLabelModel);
+energyLabelModel.hasMany(estateModel);
 
 //READ: Route til at hente liste
 estateController.get("/estates", async (req, res) => {
@@ -61,20 +47,20 @@ estateController.get("/estates/:id([0-9]*)", async (req, res) => {
     //Konvertere ID til heltal
     const { id } = req.params;
 
-    //Finder bilen i databasen baseret på id
+    //Finder estate i databasen baseret på id
     const result = await estateModel.findOne({
       where: { id: id },
       attributes: ["brand"],
     });
 
-    //Hvis bilen ikke findes returneres en 404-fejl
+    //Hvis estate ikke findes returneres en 404-fejl
     if (!result) {
       return res
         .status(404)
         .json({ message: `Could not find estate with id #${id}` });
     }
 
-    //Returnerer bilens data som JSON
+    //Returnerer estate data som JSON
     res.json(result);
 
     //Returnerer en 500-fejl
@@ -87,16 +73,57 @@ estateController.get("/estates/:id([0-9]*)", async (req, res) => {
 
 //CREATE: Route til at oprette
 estateController.post("/estates", async (req, res) => {
-  // Takes name and logo from request body
-  const { name, logo } = req.body;
+  // console.log(req.body);
 
-  if (!name || !logo) {
+  const {
+    address,
+    price,
+    payout,
+    gross,
+    net,
+    cost,
+    num_rooms,
+    num_floors,
+    floor_space,
+    ground_space,
+    basement_space,
+    year_of_construction,
+    year_rebuilt,
+    description,
+    floorplan,
+    num_clicks,
+    city_id,
+    type_id,
+    energy_label_id,
+  } = req.body;
+
+  if (
+    !address ||
+    !price ||
+    !payout ||
+    !gross ||
+    !net ||
+    !cost ||
+    !num_rooms ||
+    !num_floors ||
+    !floor_space ||
+    !ground_space ||
+    !basement_space ||
+    !year_of_construction ||
+    !year_rebuilt ||
+    !description ||
+    !floorplan ||
+    !num_clicks ||
+    !city_id ||
+    !type_id ||
+    !energy_label_id
+  ) {
     return res.status(400).json({ message: "Du skal udfylde alle felter" });
   }
 
   try {
     // const result = await estateModel.create(req.body);
-    const result = await estateModel.create({ name, logo });
+    const result = await estateModel.create(req.body);
 
     res.status(201).json(result);
   } catch (error) {
@@ -164,4 +191,4 @@ estateController.delete("/estates/:id([0-9]+)", async (req, res) => {
       message: "Id er ugyldigt",
     });
   }
-})
+});

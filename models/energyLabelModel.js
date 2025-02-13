@@ -17,7 +17,7 @@ energyLabelModel.init(
   },
   {
     sequelize,
-    modelName: "energy_labels",
+    modelName: "energy_label",
     underscored: true,
     freezeTableName: true,
     createdAt: true,

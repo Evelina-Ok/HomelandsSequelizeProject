@@ -6,7 +6,7 @@ import { energyLabelModel } from "../models/energyLabelModel.js";
 export const energyLabelController = express.Router();
 
 //READ: Route til at hente liste
-energyLabelController.get("/energy_labels", async (req, res) => {
+energyLabelController.get("/energy_label", async (req, res) => {
   try {
     //Henter alle types fra databasen ved at kalde findAll på energyLabelModel
     const energyLabels = await energyLabelModel.findAll({
@@ -27,7 +27,7 @@ energyLabelController.get("/energy_labels", async (req, res) => {
 });
 
 //READ: Route til at hente detaljer
-energyLabelController.get("/energy_labels/:id([0-9]*)", async (req, res) => {
+energyLabelController.get("/energy_label/:id([0-9]*)", async (req, res) => {
   try {
     //Konvertere ID til heltal
     const { id } = req.params;
@@ -57,7 +57,7 @@ energyLabelController.get("/energy_labels/:id([0-9]*)", async (req, res) => {
 });
 
 //CREATE: Route til at oprette
-energyLabelController.post("/energy_labels", async (req, res) => {
+energyLabelController.post("/energy_label", async (req, res) => {
   // Takes name and logo from request body
   const { name } = req.body;
 
@@ -80,7 +80,7 @@ energyLabelController.post("/energy_labels", async (req, res) => {
 });
 
 //put - update. Routes to update
-energyLabelController.put("/energy_labels", async (req, res) => {
+energyLabelController.put("/energy_label", async (req, res) => {
   const { id, name } = req.body;
 
   if (id && name) {

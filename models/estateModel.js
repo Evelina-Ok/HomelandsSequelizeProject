@@ -1,5 +1,8 @@
 import sequelize from "../config/sequelizeConfig.js";
 import { Model, DataTypes } from "sequelize";
+import { cityModel } from "./cityModel.js";
+import { estateTypeModel } from "./estateTypeModel.js";
+import { energyLabelModel } from "./energyLabelModel.js";
 export class estateModel extends Model {}
 
 estateModel.init(
@@ -82,21 +85,33 @@ estateModel.init(
     city_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: cityModel,
+        key: 'id'
+      }
     },
     type_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: estateTypeModel,
+        key: 'id'
+      }
     },
     energy_label_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: energyLabelModel,
+        key: 'id'
+      }
     },
   },
   {
     sequelize,
-    modelName: "estates",
+    modelName: "estate",
     underscored: true,
-    freezeTableName: true,
+    freezeTableName: false,
     createdAt: true,
     updatedAt: true,
   }

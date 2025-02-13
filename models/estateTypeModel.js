@@ -17,7 +17,7 @@ estateTypeModel.init(
   },
   {
     sequelize,
-    modelName: "estate_types",
+    modelName: "type",
     underscored: true,
     freezeTableName: true,
     createdAt: true,

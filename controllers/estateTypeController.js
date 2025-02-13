@@ -6,7 +6,7 @@ import { estateTypeModel } from "../models/estateTypeModel.js";
 export const estateTypeController = express.Router();
 
 //READ: Route til at hente liste
-estateTypeController.get("/estate_types", async (req, res) => {
+estateTypeController.get("/type", async (req, res) => {
   try {
     //Henter alle types fra databasen ved at kalde findAll på estateTypeModel
     const estateTypes = await estateTypeModel.findAll({
@@ -27,7 +27,7 @@ estateTypeController.get("/estate_types", async (req, res) => {
 });
 
 //READ: Route til at hente detaljer
-estateTypeController.get("/estate_types/:id([0-9]*)", async (req, res) => {
+estateTypeController.get("/type/:id([0-9]*)", async (req, res) => {
   try {
     //Konvertere ID til heltal
     const { id } = req.params;
@@ -57,7 +57,7 @@ estateTypeController.get("/estate_types/:id([0-9]*)", async (req, res) => {
 });
 
 //CREATE: Route til at oprette
-estateTypeController.post("/estate_types", async (req, res) => {
+estateTypeController.post("/type", async (req, res) => {
   // Takes name and logo from request body
   const { name } = req.body;
 
@@ -80,7 +80,7 @@ estateTypeController.post("/estate_types", async (req, res) => {
 });
 
 //put - update. Routes to update
-estateTypeController.put("/estate_types", async (req, res) => {
+estateTypeController.put("/type", async (req, res) => {
   const { id, name } = req.body;
 
   if (id && name) {
@@ -107,7 +107,7 @@ estateTypeController.put("/estate_types", async (req, res) => {
 });
 
 // Route til at slette en estate type baseret på ID
-estateTypeController.delete("/estate_types/:id([0-9]+)", async (req, res) => {
+estateTypeController.delete("/type/:id([0-9]+)", async (req, res) => {
   // Henter ID fra URL-parametrene
   const id = parseInt(req.params.id, 10);
 
