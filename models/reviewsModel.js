@@ -1,5 +1,7 @@
 import sequelize from "../config/sequelizeConfig.js";
 import { Model, DataTypes } from "sequelize";
+import { estateModel } from "./estateModel.js";
+import { userModel } from "./userModel.js";
 export class reviewsModel extends Model {}
 
 reviewsModel.init(
@@ -29,10 +31,18 @@ reviewsModel.init(
     estate_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: estateModel,
+        key: "id",
+      },
     },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: userModel,
+        key: "id",
+      },
     },
     is_active: {
       type: DataTypes.INTEGER,

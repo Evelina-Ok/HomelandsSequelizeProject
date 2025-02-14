@@ -7,7 +7,9 @@ export const userController = express.Router();
 userController.get("/users", async (req, res) => {
   try {
     const data = await userModel.findAll({
-      attributes: ["id", "firstname", "lastname"],
+      attributes: {exclude: ["password"]},
+    //   attributes: ["id", "firstname", "lastname"],
+
     });
 
     if (!data || data.length === 0) {
@@ -55,7 +57,7 @@ userController.post("/users", async (req, res) => {
     !email ||
     !password ||
     !refresh_token ||
-    !is_active === undefined
+    !is_active
   ) {
     return res.json({ message: "Missing required data" });
   }
@@ -88,7 +90,7 @@ userController.put("/users", async (req, res) => {
     !email ||
     !password ||
     !refresh_token ||
-    !is_active === undefined
+    !is_active 
   ) {
     return res.json({ message: "Missing required data" });
   }

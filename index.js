@@ -3,6 +3,7 @@ import express, { response } from "express";
 import sequelize from "./config/sequelizeConfig.js";
 import dotenv from "dotenv";
 import { dbController } from "./controllers/dbController.js";
+import { userController } from "./controllers/userController.js";
 import { cityController } from "./controllers/cityController.js";
 import { estateController } from "./controllers/estateController.js";
 import { estateTypeController } from "./controllers/estateTypeController.js";
@@ -26,6 +27,7 @@ app.use(dbController);
 
 app.use(
   cityController,
+  userController,
   estateController,
   estateTypeController,
   energyLabelController

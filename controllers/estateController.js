@@ -4,6 +4,8 @@ import { estateTypeModel } from "../models/estateTypeModel.js";
 import { estateModel } from "../models/estateModel.js";
 import { cityModel } from "../models/cityModel.js";
 import { energyLabelModel } from "../models/energyLabelModel.js";
+import { imageModel } from "../models/imageModel.js";
+import { estateImageRelModel } from "../models/estateImageRelModel.js";
 
 // Opretter en router
 export const estateController = express.Router();
@@ -19,6 +21,10 @@ estateTypeModel.hasMany(estateModel);
 // Defines relation between estate model and energy label model
 estateModel.belongsTo(energyLabelModel);
 energyLabelModel.hasMany(estateModel);
+
+estateModel.belongsToMany(imageModel, {through: estateImageRelModel})
+imageModel.belongsToMany(estateModel, {through: estateImageRelModel})
+
 
 //READ: Route til at hente liste
 estateController.get("/estates", async (req, res) => {

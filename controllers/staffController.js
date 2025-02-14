@@ -68,7 +68,7 @@ staffController.put('/staffs', async (req, res) => {
     }
 
     try {
-        const result = await staffModel.create({
+        const result = await staffModel.update({
             firstname, lastname, email, position, image, phone
         }, {
             where: { id }

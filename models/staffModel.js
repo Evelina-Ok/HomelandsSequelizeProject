@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import bcrypt from 'bcrypt'
+import sequelize from "../config/sequelizeConfig.js";
 export class staffModel extends Model {}
 
 staffModel.init(
@@ -11,11 +11,11 @@ staffModel.init(
       primaryKey: true,
     },
 
-    firstName: {
+    firstname: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastName: {
+    lastname: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -39,26 +39,4 @@ staffModel.init(
     sequelize,
     modelName: "staffs", 
     underscored: true, 
-    hooks: {
-        beforeCreate: async (staffModel, options) => {
-            staffModel.password = await createHash(staffModel.password)
-        },
-        beforeUpdate: async (staffModel, options) => {
-            staffModel.password = await createHash(staffModel.password)
-        }
-    }
   });
-
-  //not necessary to use addHook
-/*   staffModel.addHook('beforeBulkCreate', async staffs => {
-    for(const user of staffs) {
-        user.password = await bcrypt.hash(user.password, 10)
-    }
-  }) */
-
-    // encrypts the passwords and sends to database:
-const createHash = async string => {
-    const salt = await bcrypt.genSalt(10)
-    const hashed_string = await bcrypt.hash(string, salt)
-    return hashed_string
-}

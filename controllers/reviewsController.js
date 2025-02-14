@@ -1,10 +1,17 @@
 // Importerer express og testModel
 import express from "express";
 import { reviewsModel } from "../models/reviewsModel.js";
+import { estateModel } from "../models/estateModel.js";
 
 // Opretter en router
 export const reviewsController = express.Router();
 
+reviewsModel.belongsTo(estateModel, {
+  foreignKey: {
+    allowNull: true,
+  },
+});
+estateModel.hasMany(reviewsModel);
 
 //READ: Route til at hente liste
 reviewsController.get("/reviews", async (req, res) => {
@@ -76,7 +83,9 @@ reviewsController.post("/reviews", async (req, res) => {
 
     res
       .status(500)
-      .json({ message: `Fejl i oprettelse af reviewsModel: ${error.message} ` });
+      .json({
+        message: `Fejl i oprettelse af reviewsModel: ${error.message} `,
+      });
   }
 });
 
@@ -136,4 +145,4 @@ reviewsController.delete("/reviews/:id([0-9]+)", async (req, res) => {
       message: "Id er ugyldigt",
     });
   }
-})
+});

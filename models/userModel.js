@@ -1,4 +1,5 @@
 import { Model, DataTypes } from "sequelize";
+import sequelize from "../config/sequelizeConfig.js";
 import bcrypt from 'bcrypt'
 export class userModel extends Model {}
 
@@ -11,11 +12,11 @@ userModel.init(
       primaryKey: true,
     },
 
-    firstName: {
+    firstname: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastName: {
+    lastname: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -31,13 +32,13 @@ userModel.init(
         type: DataTypes.STRING,
         allowNull: false,
       },
-      isActive: {
+      is_active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
   }, {
     sequelize,
-    modelName: "users", 
+    modelName: "user", 
     underscored: true, 
     hooks: {
         beforeCreate: async (userModel, options) => {
