@@ -2,6 +2,7 @@ import http from "http";
 import express, { response } from "express";
 import sequelize from "./config/sequelizeConfig.js";
 import dotenv from "dotenv";
+import { authController } from "./controllers/authController.js";
 import { dbController } from "./controllers/dbController.js";
 import { userController } from "./controllers/userController.js";
 import { cityController } from "./controllers/cityController.js";
@@ -23,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Tilføjer controller som middleware
-app.use(dbController);
+app.use(dbController, authController);
 
 app.use(
   cityController,
